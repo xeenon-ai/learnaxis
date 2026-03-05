@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LearnAxis - LMS</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      background: #f5f5dc; /* beige */
+      color: #2c3e50;
+    }
+    header {
+      background: #2e8b57; /* green */
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background: #3b9d70;
+      padding: 12px;
+      text-align: center;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #f5f5dc;
+    }
+    .container {
+      padding: 30px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .course, .feature, .profile {
+      background: white;
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .course:hover, .feature:hover {
+      transform: scale(1.02);
+    }
+    h2 {
+      color: #2e8b57;
+    }
+    button {
+      background: #2e8b57;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #3b9d70;
+    }
+    footer {
+      background: #2e8b57;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      margin-top: 30px;
+    }
+    /* Login Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.5);
+    }
+    .modal-content {
+      background: white;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 300px;
+      text-align: center;
+    }
+    .modal-content h2 {
+      color: #2e8b57;
+    }
+    .close {
+      float: right;
+      font-size: 20px;
+      cursor: pointer;
+      color: #2c3e50;
+    }
+    input[type="text"], input[type="password"] {
+      width: 90%;
+      padding: 8px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>LearnAxis</h1>
+    <p>Your Dynamic Learning Management Platform</p>
+  </header>
+
+  <nav>
+    <a href="#">Home</a>
+    <a href="#courses">Courses</a>
+    <a href="#features">Features</a>
+    <a href="#profile">Profile</a>
+    <a href="#" onclick="openLogin()">Login</a>
+  </nav>
+
+  <div class="container" id="courses">
+    <h2>Available Courses</h2>
+    <div class="course">
+      <h2>Mathematics Basics</h2>
+      <p>Learn about numbers, equations, and problem-solving.</p>
+      <button onclick="enroll('Mathematics Basics')">Enroll</button>
+    </div>
+    <div class="course">
+      <h2>Introduction to Physics</h2>
+      <p>Explore motion, forces, and energy concepts.</p>
+      <button onclick="enroll('Introduction to Physics')">Enroll</button>
+    </div>
+    <div class="course">
+      <h2>Computer Science Fundamentals</h2>
+      <p>Understand algorithms, coding, and data structures.</p>
+      <button onclick="enroll('Computer Science Fundamentals')">Enroll</button>
+    </div>
+  </div>
+
+  <div class="container" id="features">
+    <h2>Platform Features</h2>
+    <div class="feature">
+      <h3>📚 Course Library</h3>
+      <p>Access a wide range of subjects from math to coding.</p>
+    </div>
+    <div class="feature">
+      <h3>📝 Quizzes & Assignments</h3>
+      <p>Test your knowledge with interactive quizzes.</p>
+    </div>
+    <div class="feature">
+      <h3>🎓 Certificates</h3>
+      <p>Earn certificates upon course completion.</p>
+    </div>
+    <div class="feature">
+      <h3>👩‍🎓 Student Dashboard</h3>
+      <p>Track your progress and enrolled courses.</p>
+    </div>
+  </div>
+
+  <div class="container" id="profile">
+    <h2>Student Profile</h2>
+    <div class="profile">
+      <p><strong>Name:</strong> Guest User</p>
+      <p><strong>Enrolled Courses:</strong> None yet</p>
+      <p><strong>Progress:</strong> 0%</p>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeLogin()">&times;</span>
+      <h2>Login</h2>
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Password">
+      <button onclick="login()">Login</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 LearnAxis. All rights reserved.</p>
+  </footer>
+
+  <script>
+    let enrolledCourses = [];
+
+    function enroll(courseName) {
+      enrolledCourses.push(courseName);
+      alert("You have enrolled in " + courseName + "!");
+      updateProfile();
+    }
+
+    function openLogin() {
+      document.getElementById("loginModal").style.display = "block";
+    }
+    function closeLogin() {
+      document.getElementById("loginModal").style.display = "none";
+    }
+    function login() {
+      const user = document.getElementById("username").value;
+      alert("Login successful! Welcome, " + user + "!");
+      document.querySelector("#profile .profile").innerHTML = `
+        <p><strong>Name:</strong> ${user}</p>
+        <p><strong>Enrolled Courses:</strong> ${enrolledCourses.length ? enrolledCourses.join(", ") : "None yet"}</p>
+        <p><strong>Progress:</strong> ${enrolledCourses.length * 20}%</p>
+      `;
+      closeLogin();
+    }
+    function updateProfile() {
+      document.querySelector("#profile .profile").innerHTML = `
+        <p><strong>Name:</strong> Guest User</p>
+        <p><strong>Enrolled Courses:</strong> ${enrolledCourses.length ? enrolledCourses.join(", ") : "None yet"}</p>
+        <p><strong>Progress:</strong> ${enrolledCourses.length * 20}%</p>
+      `;
+    }
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById("loginModal");
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>
